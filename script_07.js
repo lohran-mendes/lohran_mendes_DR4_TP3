@@ -36,8 +36,11 @@ function incluir(event) {
 
 function mostrarLista() {
   const ul = document.createElement("ul");
+  ul.style.padding = "0px";
   itensLista.forEach((item) => {
     const li = document.createElement("li");
+    li.style.marginBottom = "5px";
+    li.style.listStyle = "none";
     li.innerText = item;
     ul.appendChild(li);
   });
