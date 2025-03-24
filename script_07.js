@@ -1,40 +1,48 @@
-// Exercício 7 Filtragem de Nomes por Letra Inicial
+import { validateString } from "./lib/utils.js";
+// Exercício 7 Lista de Compras - Parte 1
 
-// Enunciado: Construa uma aplicação que defina um array com 10 nomes de escritores. Peça ao usuário para informar uma letra, converta-a para maiúscula e retorne uma lista com os escritores que têm como inicial a letra informada.
+// Crie uma aplicação com o layout sugerido abaixo que permita ao usuário incluir itens em uma lista de compras.
 
 // Observações:
 
-// Valide sempre as entradas de dados.
-// Utilize prompt e alert.
-// Teste o seu código.
+// Crie funções incluir e mostrarLista.
+// Utilize um array para guardar os itens da lista.
 
-const escritoresFamosos = [
-  "Machado de Assis",
-  "Clarice Lispector",
-  "Jorge Amado",
-  "Guimarães Rosa",
-  "Cecília Meireles",
-  "Carlos Drummond de Andrade",
-  "Fernando Pessoa",
-  "Gabriel García Márquez",
-  "Virginia Woolf",
-  "Franz Kafka",
-];
+const itensLista = [];
+const form = document.createElement("form");
+const h2 = document.createElement("h2");
+const input = document.createElement("input");
+const button = document.createElement("button");
 
-function listaDeEscritores() {
-  const letraInformada = prompt("Informe uma letra").toUpperCase();
-  if (isNaN(letraInformada) && letraInformada.trim().length === 1) {
-    const listaFiltrada = escritoresFamosos.filter(
-      (valor) => valor.slice(0, 1) === letraInformada
-    );
-    if (listaFiltrada.length > 0) {
-      alert(
-        `Segue abaixo a lista com os escritores que começam com a letra "${letraInformada}" :\n` +
-          listaFiltrada.join("\n")
-      );
-      return listaFiltrada;
-    } else alert(`Não há nenhum escritor com a inicial da letra informada.`);
-  } else
-    alert("Dado informado não aceito, tente novamente usando apenas uma letra");
+h2.innerText = "Lista de Compras";
+h2.style.textDecorationLine = "underline";
+button.innerText = "Incluir";
+button.type = "submit";
+
+document.body.querySelector("h1").insertAdjacentElement("afterend", form);
+form.appendChild(h2);
+form.appendChild(input);
+form.appendChild(button);
+
+function incluir(event) {
+  event.preventDefault();
+  const itemNovo = input.value;
+  if (validateString(itemNovo, "alert")) {
+    itensLista.push(itemNovo);
+  }
+  input.value = "";
+  mostrarLista();
 }
-listaDeEscritores();
+
+function mostrarLista() {
+  const ul = document.createElement("ul");
+  itensLista.forEach((item) => {
+    const li = document.createElement("li");
+    li.innerText = item;
+    ul.appendChild(li);
+  });
+  document.querySelector("ul")?.remove();
+  form.appendChild(ul);
+}
+
+form.addEventListener("submit", (event) => incluir(event));
